@@ -1,12 +1,8 @@
 package com.example.amfoss
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import com.example.amfoss.ui.theme.AmFOSSTheme
@@ -21,6 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +28,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AmFOSSTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RoleSelectionScreen(modifier = Modifier.padding(innerPadding)) // ✅ Pass innerPadding
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "roleSelection") {
+                    composable("roleSelection") { RoleSelectionScreen(navController) }
+                    composable("firstYear") { FirstYearScreen() }
+                    composable("secondYear") { SecondYearScreen() }
+                    composable("thirdYear") { ThirdYearScreen() }
+                    composable("fourthYear") { FourthYearScreen() }
                 }
             }
         }
@@ -37,7 +42,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RoleSelectionScreen(modifier: Modifier = Modifier) {
+fun RoleSelectionScreen(navController: NavController) {
     val roles = listOf("First Year", "Second Year", "Third Year", "Fourth Year", "Faculty")
     var selectedRole by remember { mutableStateOf<String?>(null) }
 
@@ -61,7 +66,20 @@ fun RoleSelectionScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { /* Handle role selection */ },
+            onClick = {
+                if (selectedRole == "First Year") {
+                    navController.navigate("firstYear")
+                }
+                if (selectedRole == "Second Year") {
+                    navController.navigate("secondYear")
+                }
+                if (selectedRole == "Third Year") {
+                    navController.navigate("thirdYear")
+                }
+                if (selectedRole == "Fourth Year") {
+                    navController.navigate("fourthYear")
+                }
+            },
             enabled = selectedRole != null,
             shape = RoundedCornerShape(12.dp)
         ) {
@@ -90,5 +108,57 @@ fun RoleOption(role: String, isSelected: Boolean, onClick: () -> Unit) {
             color = Color.Black,
             modifier = Modifier.padding(16.dp)
         )
+    }
+}
+
+@Composable
+fun FirstYearScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Welcome, First Year!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun SecondYearScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Welcome, Second Year!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun ThirdYearScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Welcome, Third Year!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+    }
+}
+
+@Composable
+fun FourthYearScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Welcome, Fourth Year!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
     }
 }
