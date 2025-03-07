@@ -1,0 +1,12 @@
+mutation CreateMember($input: CreateMemberInput!) {
+  createMember(input: $input) {
+    roll_no
+    name
+    email
+    sex
+    year
+    hostel
+    group_id
+  }
+}
+

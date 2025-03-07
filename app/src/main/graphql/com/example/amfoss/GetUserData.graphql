@@ -1,0 +1,12 @@
+query GetUserData($email: String!) {
+    user(email: $email) {
+        roll_no
+        name
+        email
+        sex
+        year
+        hostel
+        group_id
+    }
+}
+
